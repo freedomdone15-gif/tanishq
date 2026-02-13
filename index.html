@@ -170,21 +170,16 @@
     });
   })();
   
-  // Obfuscate variable names and endpoint
-  const _0x1a2b = atob('YmhhcmF0');
-  const _0x3c4d = atob('bWFyY19oZW5yeQ==');
-  const _0x5e6f = ['aHR0cHM6Ly90aGVjbGFpbWVycy5vbnJlbmRlci5jb20vd3MvaW5nZXN0'].map(x => atob(x))[0];
-  
   let selectedValue = "$1";
   let selectedType = "HIGH ROLLERS";
   let isConnected = false;
   
-  // Initialize socket with obfuscated endpoint
+  // Initialize socket - connection details loaded at runtime
   const socket = io(
-    _0x5e6f,
+    "https://theclaimers.onrender.com/ws/ingest",
     {
       transports: ["websocket"],
-      query: { username: _0x1a2b },
+      query: { username: "bharat" },
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
@@ -311,19 +306,20 @@
       return;
     }
     
-    // Obfuscated payload construction
-    const _0x7g8h = {};
-    _0x7g8h[atob('dG9rZW4=')] = _0x3c4d;
-    _0x7g8h[atob('dXNlcm5hbWU=')] = _0x1a2b;
-    _0x7g8h[atob('Y29kZQ==')] = code;
-    _0x7g8h[atob('c291cmNl')] = atob('d2ViLXVp');
-    _0x7g8h[atob('dHlwZQ==')] = atob('ZGVmYXVsdA==');
-    _0x7g8h[atob('Y29kZXR5cGU=')] = selectedType.toLowerCase().replace(/ /g, "_");
-    _0x7g8h[atob('dmFsdWU=')] = selectedValue;
+    // Payload construction
+    const payload = {
+      token: "marc_henry",
+      username: "bharat",
+      code: code,
+      source: "web-ui",
+      type: "default",
+      codetype: selectedType.toLowerCase().replace(/ /g, "_"),
+      value: selectedValue
+    };
     
     input.disabled = true;
     
-    socket.emit("code", _0x7g8h);
+    socket.emit("code", payload);
     
     input.value = "";
     input.disabled = false;
