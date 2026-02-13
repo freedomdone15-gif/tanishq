@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Code Drop</title>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 520px;
+      width: 100%;
+    }
+    input {
+      width: 100%;
+      padding: 18px;
+      background: #000;
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 18px;
+      outline: none;
+      margin-bottom: 30px;
+      box-sizing: border-box;
+    }
+    input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    h4 {
+      text-align: center;
+      letter-spacing: 2px;
+      margin: 25px 0 15px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .btn {
+      border: 2px solid #fff;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .btn.active {
+      background: #fff;
+      color: #000;
+    }
+    .btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .full {
+      grid-column: span 3;
+    }
+    .status {
+      text-align: right;
+      margin-top: 20px;
+      font-size: 12px;
+    }
+    .status.connected {
+      color: #00ff00;
+    }
+    .status.disconnected {
+      color: #ff0000;
+    }
+    .status.sending {
+      color: #ffff00;
+    }
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border: 2px solid;
+      background: #000;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    .notification.show {
+      opacity: 1;
+    }
+    .notification.success {
+      border-color: #00ff00;
+      color: #00ff00;
+    }
+    .notification.error {
+      border-color: #ff0000;
+      color: #ff0000;
+    }
+    .notification.warning {
+      border-color: #ffa500;
+      color: #ffa500;
+    }
+    .connection-indicator {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ff0000;
+      transition: background 0.3s;
+    }
+    .connection-indicator.connected {
+      background: #00ff00;
+      box-shadow: 0 0 10px #00ff00;
+    }
+    .connection-indicator.connecting {
+      background: #ffa500;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+  </style>
+</head>
+<body>
+<div class="connection-indicator" id="connectionIndicator"></div>
+<div class="container">
+  <!-- CODE INPUT -->
+  <input id="codeInput" placeholder="ENTER CODE" autofocus />
+  <!-- VALUE -->
+  <h4>SELECT VALUE</h4>
+  <div class="grid" id="valueGrid">
+    <div class="btn active">$1</div>
+    <div class="btn">$2</div>
+    <div class="btn">$3</div>
+    <div class="btn">$4</div>
+    <div class="btn">$5</div>
+    <div class="btn">$6.25</div>
+    <div class="btn">$12.50</div>
+    <div class="btn">$25</div>
+    <div class="btn">$50</div>
+    <div class="btn full">NO VALUE</div>
+  </div>
+  <!-- CODE TYPE -->
+  <h4>SELECT CODE TYPE</h4>
+  <div class="grid" id="typeGrid">
+    <div class="btn full active">HIGH ROLLERS</div>
+    <div class="btn full">WEEKLY STREAM</div>
+    <div class="btn full">OTHER DROPS</div>
+  </div>
+  <div class="status disconnected" id="status">CONNECTING…</div>
+</div>
+<div class="notification" id="notification"></div>
+<script>
+  // Disable all console methods
+  (function() {
+    const noop = function() {};
+    const methods = ['log', 'warn', 'error', 'info', 'debug', 'trace', 'dir', 'dirxml', 'group', 'groupEnd', 'time', 'timeEnd', 'assert', 'profile'];
+    methods.forEach(method => {
+      console[method] = noop;
+    });
+  })();
+  
+  // Obfuscate variable names and endpoint
+  const _0x1a2b = atob('YmhhcmF0');
+  const _0x3c4d = atob('bWFyY19oZW5yeQ==');
+  const _0x5e6f = ['aHR0cHM6Ly90aGVjbGFpbWVycy5vbnJlbmRlci5jb20vd3MvaW5nZXN0'].map(x => atob(x))[0];
+  
+  let selectedValue = "$1";
+  let selectedType = "HIGH ROLLERS";
+  let isConnected = false;
+  
+  // Initialize socket with obfuscated endpoint
+  const socket = io(
+    _0x5e6f,
+    {
+      transports: ["websocket"],
+      query: { username: _0x1a2b },
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      reconnectionAttempts: Infinity,
+      timeout: 20000,
+      forceNew: false,
+      perMessageDeflate: false
+    }
+  );
+  
+  // CONNECTION HANDLERS (all logs removed)
+  socket.on("connect", () => {
+    isConnected = true;
+    updateStatus("CONNECTED", "connected");
+    updateConnectionIndicator("connected");
+    showNotification("Connected", "success");
+  });
+  
+  socket.on("disconnect", (reason) => {
+    isConnected = false;
+    updateStatus("DISCONNECTED", "disconnected");
+    updateConnectionIndicator("disconnected");
+    
+    if (reason === "io server disconnect") {
+      showNotification("Server closed connection", "error");
+    } else if (reason === "transport error" || reason === "transport close") {
+      showNotification("Connection lost", "error");
+    }
+  });
+  
+  socket.on("reconnect_attempt", (attemptNumber) => {
+    updateStatus(`RECONNECTING (${attemptNumber})...`, "disconnected");
+    updateConnectionIndicator("connecting");
+  });
+  
+  socket.on("reconnect", (attemptNumber) => {
+    showNotification("Reconnected!", "success");
+  });
+  
+  socket.on("connect_error", (error) => {
+    // Silent
+  });
+  
+  socket.on("reconnect_failed", () => {
+    updateStatus("RECONNECTION FAILED", "disconnected");
+    showNotification("Cannot reconnect - check connection", "error");
+  });
+  
+  // Heartbeat (no logs)
+  setInterval(() => {
+    if (socket.connected) {
+      socket.emit("client_heartbeat");
+    }
+  }, 30000);
+  
+  socket.on("server_pong", () => {
+    // Silent
+  });
+  
+  socket.on("code_ack", (data) => {
+    // Silent
+  });
+  
+  // STATUS UPDATE
+  function updateStatus(text, className) {
+    const statusEl = document.getElementById("status");
+    statusEl.innerText = text;
+    statusEl.className = `status ${className}`;
+  }
+  
+  function updateConnectionIndicator(state) {
+    const indicator = document.getElementById("connectionIndicator");
+    indicator.className = `connection-indicator ${state}`;
+  }
+  
+  // NOTIFICATION SYSTEM
+  function showNotification(message, type) {
+    const notif = document.getElementById("notification");
+    notif.innerText = message;
+    notif.className = `notification ${type} show`;
+    setTimeout(() => {
+      notif.classList.remove("show");
+    }, 3000);
+  }
+  
+  // BUTTON SELECTION LOGIC
+  function setupGrid(gridId, onSelect) {
+    document.querySelectorAll(`#${gridId} .btn`).forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll(`#${gridId} .btn`)
+          .forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        onSelect(btn.innerText);
+      };
+    });
+  }
+  
+  setupGrid("valueGrid", v => {
+    selectedValue = v === "NO VALUE" ? null : v;
+  });
+  
+  setupGrid("typeGrid", t => {
+    selectedType = t;
+  });
+  
+  // ENTER = SEND
+  document.getElementById("codeInput").addEventListener("keydown", e => {
+    if (e.key === "Enter") sendCode();
+  });
+  
+  function sendCode() {
+    const input = document.getElementById("codeInput");
+    const code = input.value.trim();
+    
+    if (input.disabled) return;
+    
+    if (!code) {
+      showNotification("Please enter a code", "error");
+      return;
+    }
+    
+    if (!socket.connected) {
+      showNotification("Not connected - please wait", "error");
+      return;
+    }
+    
+    // Obfuscated payload construction
+    const _0x7g8h = {};
+    _0x7g8h[atob('dG9rZW4=')] = _0x3c4d;
+    _0x7g8h[atob('dXNlcm5hbWU=')] = _0x1a2b;
+    _0x7g8h[atob('Y29kZQ==')] = code;
+    _0x7g8h[atob('c291cmNl')] = atob('d2ViLXVp');
+    _0x7g8h[atob('dHlwZQ==')] = atob('ZGVmYXVsdA==');
+    _0x7g8h[atob('Y29kZXR5cGU=')] = selectedType.toLowerCase().replace(/ /g, "_");
+    _0x7g8h[atob('dmFsdWU=')] = selectedValue;
+    
+    input.disabled = true;
+    
+    socket.emit("code", _0x7g8h);
+    
+    input.value = "";
+    input.disabled = false;
+    input.focus();
+    showNotification(`Code "${code}" sent`, "success");
+  }
+  
+  // Network status handlers (no logs)
+  window.addEventListener("online", () => {
+    showNotification("Internet restored", "success");
+    if (!socket.connected) {
+      socket.connect();
+    }
+  });
+  
+  window.addEventListener("offline", () => {
+    showNotification("No internet connection", "error");
+    updateStatus("OFFLINE", "disconnected");
+    updateConnectionIndicator("disconnected");
+  });
+</script>
+</body>
+</html>
