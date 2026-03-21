@@ -19,7 +19,7 @@
       min-height: 100vh;
     }
 
-    /* ─── LOGIN SCREEN ─────────────────────────────────────────── */
+    /* ── LOGIN ───────────────────────────────────────── */
     #loginScreen {
       position: fixed;
       inset: 0;
@@ -31,10 +31,7 @@
       z-index: 9999;
       padding: 20px;
     }
-
-    #loginScreen.hidden {
-      display: none;
-    }
+    #loginScreen.hidden { display: none; }
 
     .login-box {
       width: 100%;
@@ -57,7 +54,6 @@
       text-align: center;
       margin-bottom: 6px;
     }
-
     .login-subtitle {
       font-size: 11px;
       letter-spacing: 3px;
@@ -65,7 +61,6 @@
       opacity: 0.4;
       margin-bottom: 36px;
     }
-
     .login-label {
       font-size: 10px;
       letter-spacing: 3px;
@@ -73,7 +68,6 @@
       margin-bottom: 6px;
       display: block;
     }
-
     .login-input {
       width: 100%;
       padding: 14px 16px;
@@ -84,17 +78,9 @@
       font-size: 16px;
       outline: none;
       margin-bottom: 20px;
-      transition: border-color 0.2s;
     }
-
-    .login-input:focus {
-      border-color: #fff;
-      box-shadow: 0 0 0 1px #fff;
-    }
-
-    .login-input.shake {
-      animation: shake 0.3s ease;
-    }
+    .login-input:focus { box-shadow: 0 0 0 1px #fff; }
+    .login-input.shake { animation: shake 0.3s ease; }
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
@@ -115,16 +101,8 @@
       transition: background 0.2s, color 0.2s;
       margin-top: 4px;
     }
-
-    .login-btn:hover {
-      background: #000;
-      color: #fff;
-    }
-
-    .login-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
+    .login-btn:hover    { background: #000; color: #fff; }
+    .login-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
     .login-error {
       font-size: 11px;
@@ -133,33 +111,27 @@
       text-align: center;
       margin-top: 16px;
       height: 14px;
-      transition: opacity 0.2s;
     }
 
-    /* corner decoration */
     .login-box::before,
     .login-box::after {
       content: '';
       position: absolute;
-      width: 10px;
-      height: 10px;
+      width: 10px; height: 10px;
       background: #000;
       border: 2px solid #fff;
     }
     .login-box::before { top: -6px; left: -6px; }
     .login-box::after  { bottom: -6px; right: -6px; }
 
-    /* ─── MAIN APP ────────────────────────────────────────────── */
+    /* ── APP ─────────────────────────────────────────── */
     #appScreen {
       display: none;
       width: 100%;
       max-width: 520px;
       flex-direction: column;
     }
-
-    #appScreen.visible {
-      display: flex;
-    }
+    #appScreen.visible { display: flex; }
 
     .app-header {
       display: flex;
@@ -176,6 +148,61 @@
       letter-spacing: 5px;
     }
 
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* ── LIMIT COUNTER ───────────────────────────────── */
+    .limit-counter {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      line-height: 1.2;
+    }
+
+    .limit-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      opacity: 0.35;
+    }
+
+    .limit-value {
+      font-size: 15px;
+      letter-spacing: 1px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    /* colour shifts as user burns through quota */
+    .limit-value.ok      { color: #00ff00; }
+    .limit-value.warning { color: #ffa500; }
+    .limit-value.danger  { color: #ff4444; }
+
+    /* progress bar under the counter */
+    .limit-bar-wrap {
+      width: 80px;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      margin-top: 3px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .limit-bar {
+      height: 100%;
+      background: #00ff00;
+      transition: width 0.3s, background 0.3s;
+      border-radius: 2px;
+    }
+
+    /* unlimited badge */
+    .limit-unlimited {
+      font-size: 10px;
+      letter-spacing: 2px;
+      opacity: 0.3;
+    }
+
     .logout-btn {
       font-family: 'Share Tech Mono', monospace;
       font-size: 10px;
@@ -187,20 +214,15 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-
-    .logout-btn:hover {
-      color: #fff;
-      border-color: #fff;
-    }
+    .logout-btn:hover { color: #fff; border-color: #fff; }
 
     .welcome-tag {
       font-size: 10px;
       letter-spacing: 2px;
       opacity: 0.35;
-      margin-right: 10px;
     }
 
-    /* existing styles */
+    /* ── MAIN CONTROLS ───────────────────────────────── */
     .container { width: 100%; }
 
     input#codeInput {
@@ -214,11 +236,7 @@
       outline: none;
       margin-bottom: 30px;
     }
-
-    input#codeInput:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    input#codeInput:disabled { opacity: 0.5; cursor: not-allowed; }
 
     h4 {
       text-align: center;
@@ -245,11 +263,9 @@
       font-family: 'Share Tech Mono', monospace;
       font-size: 13px;
     }
-
-    .btn:hover { background: rgba(255,255,255,0.1); }
+    .btn:hover  { background: rgba(255,255,255,0.1); }
     .btn.active { background: #fff; color: #000; }
-
-    .full { grid-column: span 3; }
+    .full       { grid-column: span 3; }
 
     .status {
       text-align: right;
@@ -261,6 +277,53 @@
     .status.disconnected { color: #ff4444; }
     .status.sending      { color: #ffff00; }
 
+    /* ── LIMIT-HIT OVERLAY ───────────────────────────── */
+    #limitOverlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 8000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+    }
+    #limitOverlay.show { display: flex; }
+
+    .limit-overlay-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .limit-overlay-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      letter-spacing: 5px;
+      color: #ff4444;
+      margin-bottom: 10px;
+    }
+    .limit-overlay-msg {
+      font-size: 12px;
+      letter-spacing: 2px;
+      opacity: 0.5;
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+    .limit-overlay-btn {
+      padding: 14px 32px;
+      background: #ff4444;
+      color: #fff;
+      border: 2px solid #ff4444;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .limit-overlay-btn:hover { background: transparent; color: #ff4444; }
+
+    /* ── NOTIFICATION ────────────────────────────────── */
     .notification {
       position: fixed;
       top: 20px;
@@ -285,8 +348,7 @@
       position: fixed;
       top: 20px;
       left: 20px;
-      width: 10px;
-      height: 10px;
+      width: 10px; height: 10px;
       border-radius: 50%;
       background: #ff4444;
       transition: background 0.3s;
@@ -308,21 +370,26 @@
 </head>
 <body>
 
-<!-- ── LOGIN SCREEN ─────────────────────────────── -->
+<!-- ── LOGIN SCREEN ──────────────────────────────── -->
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-title">CODE DROP</div>
     <div class="login-subtitle">AUTHORIZED ACCESS ONLY</div>
-
     <label class="login-label">USERNAME</label>
     <input class="login-input" id="loginUser" type="text" placeholder="enter username" autocomplete="username" />
-
     <label class="login-label">PASSWORD</label>
-    <input class="login-input" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password" />
-
+    <input class="login-input" id="loginPass" type="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" autocomplete="current-password" />
     <button class="login-btn" id="loginBtn" onclick="attemptLogin()">LOGIN</button>
     <div class="login-error" id="loginError"></div>
   </div>
+</div>
+
+<!-- ── LIMIT HIT OVERLAY ─────────────────────────── -->
+<div id="limitOverlay">
+  <div class="limit-overlay-icon">&#9940;</div>
+  <div class="limit-overlay-title">LIMIT REACHED</div>
+  <div class="limit-overlay-msg" id="limitOverlayMsg"></div>
+  <button class="limit-overlay-btn" onclick="logout()">OK &mdash; LOGOUT</button>
 </div>
 
 <!-- ── MAIN APP ──────────────────────────────────── -->
@@ -331,15 +398,23 @@
 <div id="appScreen">
   <div class="app-header">
     <div class="app-logo">CODE DROP</div>
-    <div style="display:flex;align-items:center;">
-      <span class="welcome-tag" id="welcomeTag"></span>
-      <button class="logout-btn" onclick="logout()">LOGOUT</button>
+    <div class="header-right">
+
+      <!-- live counter -->
+      <div id="limitWidget">
+        <!-- filled by JS -->
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+        <span class="welcome-tag" id="welcomeTag"></span>
+        <button class="logout-btn" onclick="logout()">LOGOUT</button>
+      </div>
+
     </div>
   </div>
 
   <div class="container">
     <input id="codeInput" placeholder="ENTER CODE" />
-
     <h4>SELECT VALUE</h4>
     <div class="grid" id="valueGrid">
       <div class="btn active">$1</div>
@@ -353,62 +428,139 @@
       <div class="btn">$50</div>
       <div class="btn full">NO VALUE</div>
     </div>
-
     <h4>SELECT CODE TYPE</h4>
     <div class="grid" id="typeGrid">
       <div class="btn full active">HIGH ROLLERS</div>
       <div class="btn full">WEEKLY STREAM</div>
       <div class="btn full">OTHER DROPS</div>
     </div>
-
-    <div class="status disconnected" id="status">CONNECTING…</div>
+    <div class="status disconnected" id="status">CONNECTING&hellip;</div>
   </div>
 </div>
 
 <div class="notification" id="notification"></div>
 
 <script>
-  // ── Silence console ─────────────────────────────
+  // ── Silence console ──────────────────────────────
   (function() {
     const noop = () => {};
-    ['log','warn','error','info','debug','trace','dir','dirxml','group','groupEnd','time','timeEnd','assert','profile']
-      .forEach(m => console[m] = noop);
+    ['log','warn','error','info','debug','trace','dir','dirxml','group',
+     'groupEnd','time','timeEnd','assert','profile'].forEach(m => console[m] = noop);
   })();
 
-  // ── Credentials (edit here) ──────────────────────
-  // Format: { "username": "password" }
+  // ────────────────────────────────────────────────
+  // USERS CONFIG
+  // password : string
+  // limit    : number  → max code drops allowed per session
+  //            0 or missing → unlimited
+  // ────────────────────────────────────────────────
   const USERS = {
-    "bharat": "drop2024",
-    "admin":  "admin123"
+    "bharat": { password: "drop2024", limit: 50  },
+    "admin":  { password: "admin123", limit: 0   }  // 0 = unlimited
   };
 
-  let currentUser = null;
+  let currentUser   = null;
+  let userLimit     = 0;      // 0 means unlimited
+  let sendCount     = 0;
+  let socket        = null;
+  let selectedValue = "$1";
+  let selectedType  = "HIGH ROLLERS";
 
-  // ── Login logic ──────────────────────────────────
-  function attemptLogin() {
-    const user = document.getElementById("loginUser").value.trim().toLowerCase();
-    const pass = document.getElementById("loginPass").value;
-    const errEl = document.getElementById("loginError");
-    const btn   = document.getElementById("loginBtn");
+  // ── SHA-256 hash (username:password) ─────────────
+  async function makeHash(user, pass) {
+    const buf = await crypto.subtle.digest(
+      "SHA-256",
+      new TextEncoder().encode(user + ":" + pass)
+    );
+    return Array.from(new Uint8Array(buf))
+      .map(b => b.toString(16).padStart(2, "0")).join("");
+  }
 
-    if (!user || !pass) {
-      showLoginError("PLEASE FILL IN ALL FIELDS");
+  // ── Show main app ────────────────────────────────
+  function showApp(user) {
+    currentUser = user;
+    const cfg   = USERS[user];
+    userLimit   = (cfg && cfg.limit) ? cfg.limit : 0;
+
+    // restore count from localStorage so it survives reload
+    const storedCount = parseInt(localStorage.getItem("codedrop_count_" + user) || "0", 10);
+    sendCount = storedCount;
+
+    document.getElementById("loginScreen").classList.add("hidden");
+    document.getElementById("appScreen").classList.add("visible");
+    document.getElementById("welcomeTag").textContent = user.toUpperCase();
+    renderCounter();
+    document.getElementById("codeInput").focus();
+    initSocket();
+  }
+
+  // ── Render limit counter widget ──────────────────
+  function renderCounter() {
+    const widget = document.getElementById("limitWidget");
+
+    if (!userLimit) {
+      // unlimited user
+      widget.innerHTML = '<span class="limit-unlimited">&#8734; UNLIMITED</span>';
       return;
     }
 
-    btn.disabled = true;
-    btn.textContent = "CHECKING…";
+    const remaining = userLimit - sendCount;
+    const pct       = Math.max(0, (remaining / userLimit) * 100);
 
-    setTimeout(() => {
-      if (USERS[user] && USERS[user] === pass) {
-        currentUser = user;
-        localStorage.setItem("codedrop_user", user);
+    // colour logic
+    let cls = "ok";
+    let barColor = "#00ff00";
+    if (pct <= 20) { cls = "danger";  barColor = "#ff4444"; }
+    else if (pct <= 40) { cls = "warning"; barColor = "#ffa500"; }
+
+    widget.innerHTML =
+      '<div class="limit-counter">' +
+        '<span class="limit-label">DROPS LEFT</span>' +
+        '<span class="limit-value ' + cls + '">' + remaining + ' / ' + userLimit + '</span>' +
+        '<div class="limit-bar-wrap">' +
+          '<div class="limit-bar" style="width:' + pct + '%;background:' + barColor + ';"></div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  // ── Check limit after every send ─────────────────
+  function checkLimit() {
+    if (!userLimit) return; // unlimited — nothing to check
+    renderCounter();
+    if (sendCount >= userLimit) {
+      // small delay so the success notification is visible first
+      setTimeout(() => showLimitReached(), 800);
+    }
+  }
+
+  function showLimitReached() {
+    document.getElementById("limitOverlayMsg").innerHTML =
+      "YOU HAVE SENT " + userLimit + " CODE DROPS.<br>YOUR SESSION LIMIT HAS BEEN REACHED.<br>PLEASE CONTACT THE ADMIN FOR ACCESS.";
+    document.getElementById("limitOverlay").classList.add("show");
+    // disable input immediately
+    document.getElementById("codeInput").disabled = true;
+  }
+
+  // ── Login ────────────────────────────────────────
+  function attemptLogin() {
+    const user  = document.getElementById("loginUser").value.trim().toLowerCase();
+    const pass  = document.getElementById("loginPass").value;
+    const errEl = document.getElementById("loginError");
+    const btn   = document.getElementById("loginBtn");
+
+    if (!user || !pass) { showLoginError("PLEASE FILL IN ALL FIELDS"); return; }
+
+    btn.disabled    = true;
+    btn.textContent = "CHECKING\u2026";
+
+    setTimeout(async () => {
+      const cfg = USERS[user];
+      if (cfg && cfg.password === pass) {
+        const token = await makeHash(user, pass);
+        localStorage.setItem("codedrop_user",  user);
+        localStorage.setItem("codedrop_token", token);
         errEl.textContent = "";
-        document.getElementById("loginScreen").classList.add("hidden");
-        document.getElementById("appScreen").classList.add("visible");
-        document.getElementById("welcomeTag").textContent = user.toUpperCase();
-        document.getElementById("codeInput").focus();
-        initSocket();
+        showApp(user);
       } else {
         showLoginError("INVALID USERNAME OR PASSWORD");
         ["loginUser","loginPass"].forEach(id => {
@@ -417,45 +569,71 @@
           setTimeout(() => el.classList.remove("shake"), 350);
         });
         document.getElementById("loginPass").value = "";
-        btn.disabled = false;
+        btn.disabled    = false;
         btn.textContent = "LOGIN";
       }
     }, 400);
   }
 
   function showLoginError(msg) {
-    const el = document.getElementById("loginError");
-    el.textContent = msg;
+    document.getElementById("loginError").textContent = msg;
     const btn = document.getElementById("loginBtn");
-    btn.disabled = false;
+    btn.disabled    = false;
     btn.textContent = "LOGIN";
   }
 
+  // ── Logout ───────────────────────────────────────
   function logout() {
+    // NOTE: we keep codedrop_count_* in localStorage intentionally
+    // so the count persists even if the user logs back in.
+    // Remove the line below if you want count to reset on every login.
     currentUser = null;
+    userLimit   = 0;
+    sendCount   = 0;
     localStorage.removeItem("codedrop_user");
+    localStorage.removeItem("codedrop_token");
     if (socket) socket.disconnect();
+    document.getElementById("limitOverlay").classList.remove("show");
     document.getElementById("appScreen").classList.remove("visible");
     document.getElementById("loginScreen").classList.remove("hidden");
     document.getElementById("loginUser").value = "";
     document.getElementById("loginPass").value = "";
     document.getElementById("loginError").textContent = "";
-    updateStatus("CONNECTING…", "disconnected");
+    document.getElementById("codeInput").disabled = false;
+    updateStatus("CONNECTING\u2026", "disconnected");
     updateConnectionIndicator("disconnected");
   }
 
-  // Enter key on login inputs
+  // ── Enter key on login fields ────────────────────
   ["loginUser","loginPass"].forEach(id => {
     document.getElementById(id).addEventListener("keydown", e => {
       if (e.key === "Enter") attemptLogin();
     });
   });
 
-  // ── Socket (initialized after login) ────────────
-  let socket = null;
-  let selectedValue = "$1";
-  let selectedType  = "HIGH ROLLERS";
+  // ── Auto-login on page load ──────────────────────
+  (async function() {
+    const savedUser  = localStorage.getItem("codedrop_user");
+    const savedToken = localStorage.getItem("codedrop_token");
+    if (savedUser && savedToken && USERS[savedUser]) {
+      const cfg = USERS[savedUser];
+      const currentToken = await makeHash(savedUser, cfg.password);
+      if (currentToken === savedToken) {
+        showApp(savedUser);
+        // if they already hit limit before reload, show overlay again
+        const lim = (cfg && cfg.limit) ? cfg.limit : 0;
+        const cnt = parseInt(localStorage.getItem("codedrop_count_" + savedUser) || "0", 10);
+        if (lim && cnt >= lim) {
+          setTimeout(() => showLimitReached(), 300);
+        }
+      } else {
+        localStorage.removeItem("codedrop_user");
+        localStorage.removeItem("codedrop_token");
+      }
+    }
+  })();
 
+  // ── Socket ───────────────────────────────────────
   function initSocket() {
     if (socket) { socket.connect(); return; }
 
@@ -476,7 +654,6 @@
       updateConnectionIndicator("connected");
       showNotification("Connected", "success");
     });
-
     socket.on("disconnect", reason => {
       updateStatus("DISCONNECTED", "disconnected");
       updateConnectionIndicator("disconnected");
@@ -485,13 +662,11 @@
       else if (reason === "transport error" || reason === "transport close")
         showNotification("Connection lost", "error");
     });
-
     socket.on("reconnect_attempt", n => {
-      updateStatus(`RECONNECTING (${n})...`, "disconnected");
+      updateStatus("RECONNECTING (" + n + ")...", "disconnected");
       updateConnectionIndicator("connecting");
     });
-
-    socket.on("reconnect", () => showNotification("Reconnected!", "success"));
+    socket.on("reconnect",        () => showNotification("Reconnected!", "success"));
     socket.on("reconnect_failed", () => {
       updateStatus("RECONNECTION FAILED", "disconnected");
       showNotification("Cannot reconnect", "error");
@@ -502,35 +677,32 @@
     }, 30000);
   }
 
-  // ── Status helpers ───────────────────────────────
+  // ── Helpers ──────────────────────────────────────
   function updateStatus(text, cls) {
     const el = document.getElementById("status");
     el.innerText = text;
-    el.className = `status ${cls}`;
+    el.className = "status " + cls;
   }
-
   function updateConnectionIndicator(state) {
-    document.getElementById("connectionIndicator").className = `connection-indicator ${state}`;
+    document.getElementById("connectionIndicator").className = "connection-indicator " + state;
   }
-
   function showNotification(msg, type) {
     const n = document.getElementById("notification");
     n.innerText = msg;
-    n.className = `notification ${type} show`;
+    n.className = "notification " + type + " show";
     setTimeout(() => n.classList.remove("show"), 3000);
   }
 
   // ── Button grids ─────────────────────────────────
   function setupGrid(gridId, onSelect) {
-    document.querySelectorAll(`#${gridId} .btn`).forEach(btn => {
+    document.querySelectorAll("#" + gridId + " .btn").forEach(btn => {
       btn.onclick = () => {
-        document.querySelectorAll(`#${gridId} .btn`).forEach(b => b.classList.remove("active"));
+        document.querySelectorAll("#" + gridId + " .btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         onSelect(btn.innerText);
       };
     });
   }
-
   setupGrid("valueGrid", v => { selectedValue = v === "NO VALUE" ? null : v; });
   setupGrid("typeGrid",  t => { selectedType  = t; });
 
@@ -543,8 +715,14 @@
     const input = document.getElementById("codeInput");
     const code  = input.value.trim();
     if (input.disabled) return;
-    if (!code) { showNotification("Please enter a code", "error"); return; }
-    if (!socket || !socket.connected) { showNotification("Not connected – please wait", "error"); return; }
+    if (!code)                        { showNotification("Please enter a code", "error"); return; }
+    if (!socket || !socket.connected) { showNotification("Not connected \u2013 please wait", "error"); return; }
+
+    // block if already at limit
+    if (userLimit && sendCount >= userLimit) {
+      showLimitReached();
+      return;
+    }
 
     const payload = {
       token:    "marc_henry",
@@ -558,10 +736,19 @@
 
     input.disabled = true;
     socket.emit("code", payload);
+
+    // increment and persist count
+    sendCount++;
+    if (currentUser) {
+      localStorage.setItem("codedrop_count_" + currentUser, sendCount);
+    }
+
     input.value    = "";
     input.disabled = false;
     input.focus();
-    showNotification(`Code "${code}" sent`, "success");
+    showNotification('Code "' + code + '" sent', "success");
+
+    checkLimit();
   }
 
   // ── Network events ───────────────────────────────
